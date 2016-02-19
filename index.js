@@ -1,8 +1,8 @@
 'use strict';
 
+/* global mapboxgl */
 window.mapboxgl = require('mapbox-gl');
 
-/* global mapboxgl */
 /* eslint-disable no-loop-func */
 mapboxgl.accessToken = 'pk.eyJ1IjoibW9sbHltZXJwIiwiYSI6ImNpazdqbGtiZTAxbGNocm0ybXJ3MnNzOHAifQ.5_kJrEENbBWtqTZEv7g1-w';
 
@@ -43,33 +43,33 @@ map.on('style.load', function() {
     });
 
     map.addLayer({
-      id: "zone-polygons",
-      source: "zone",
-      type: "fill",
+      id: 'zone-polygons',
+      source: 'zone',
+      type: 'fill',
       paint: {
-        "fill-color": "cyan",
-        "fill-opacity": .2,
-        "fill-outline-color": "white"
+        'fill-color': 'cyan',
+        'fill-opacity': .2,
+        'fill-outline-color': 'white'
       }
     })
     map.addLayer({
-      "id": "allroutes",
-      "type": "line",
-      "source": "routes",
-      "layout": {
-        "line-cap": "round",
-        "line-join": "round"
+      'id': 'allroutes',
+      'type': 'line',
+      'source': 'routes',
+      'layout': {
+        'line-cap': 'round',
+        'line-join': 'round'
       },
-      "paint": {
-        "line-width": {
-          "base": 1.5,
-          "stops": [
+      'paint': {
+        'line-width': {
+          'base': 1.5,
+          'stops': [
             [10, 1.5],
             [20, 20]
           ]
         },
-        "line-color": 'rgba(10,186,245,1)',
-        "line-opacity": 1,
+        'line-color': 'rgba(10,186,245,1)',
+        'line-opacity': 1,
       }
     })
 
@@ -106,15 +106,13 @@ map.on('style.load', function() {
           return '-webkit-transform:translateX(' + pixelCoords.x + 'px) translateY(' + pixelCoords.y + 'px)';
         });
     }
-    console.log(marker[0][0]);
 
     function moveMarker() {
         marker.transition()
         .duration(10000)
-        .styleTween("-webkit-transform", translateAlong(test_path))
+        .styleTween('-webkit-transform', translateAlong(test_path))
 
     }
-
 
     function translateAlong(path) {
       var l = turf.lineDistance(path.features[0], 'kilometers');
@@ -123,37 +121,9 @@ map.on('style.load', function() {
           // t is time as as % of total transition duration
           var p = turf.along(path.features[0], t*l, 'kilometers');
           var pixelCoords = map.project([p.geometry.coordinates[0], p.geometry.coordinates[1]]);
-          console.log(pixelCoords);
           return 'translateX(' + pixelCoords.x + 'px) translateY(' + pixelCoords.y + 'px)';
         };
       };
     }
 
-    // build out d3 projection business so that we can animate along a d3 path?
-    // var container = map.getCanvasContainer();
-    // var svg = d3.select(container).append("svg")
-
-    // function projectPoint(lon, lat) {
-    //   var point = map.project(new mapboxgl.LngLat(lon, lat));
-    //   this.stream.point(point.x, point.y);
-    // }
-
-    // var transform = d3.geo.transform({ point: projectPoint });
-    // var path = d3.geo.path().projection(transform);
-
-    // var featureElement = svg.selectAll("path")
-    //   .data(test_path.features)
-    //   .enter()
-    //   .append("path")
-    //   .attr({
-    //     "stroke": "red",
-    //     "fill-opacity": 0,
-    //     "d": path
-    //   });
-
-
-    // function update() {
-    //   featureElement.attr("d", path);
-    // }
-    // update();
   }) // closes on('style.load') event listener
