@@ -30,6 +30,7 @@
   "dependencies": {
     "d3": "^3.5.16",
     "mapbox-gl": "mapbox/mapbox-gl-js",
+    "q": "^1.4.1",
     "turf": "^2.0.2"
   }
 }

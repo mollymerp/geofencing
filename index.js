@@ -3,29 +3,14 @@
 /* global mapboxgl */
 window.mapboxgl = require('mapbox-gl');
 
-/* eslint-disable no-loop-func */
-mapboxgl.accessToken = 'pk.eyJ1IjoibW9sbHltZXJwIiwiYSI6ImNpazdqbGtiZTAxbGNocm0ybXJ3MnNzOHAifQ.5_kJrEENbBWtqTZEv7g1-w';
-
-var bounds = [
-  [-0.02300262451171875, 51.453792970504495], // Southwest coordinates
-  [-0.26882171630859375, 51.55167238691343], // Northeast coordinates
-];
-
-var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/light-v8',
-  center: [-0.15003204345703125, 51.50489601254001],
-  zoom: 10.5,
-  // hash: true,
-  maxBounds: bounds
-});
-
+var map = require('./map');
 var fs = require('fs');
 var path = require('path');
 var turf = require('turf');
 var d3 = require('d3');
 var getPath = require('./getPath');
-
+var makeCar = require('./createCar');
+makeCar();
 
 var zones = JSON.parse(fs.readFileSync(path.join(__dirname, 'zone.geojson'), 'utf8'));
 var test_path = JSON.parse(fs.readFileSync(path.join(__dirname, 'sample_path.json'), 'utf8'));
@@ -78,9 +63,10 @@ map.on('style.load', function() {
         'line-opacity': 1,
       }
     })
-    var car = d3.select('#overlay')
-      .append('svg')
-      .append('circle')
+
+    var svg = d3.select('#overlay').append('svg');
+
+    var car = svg.append('circle')
       .attr('r', 7)
       .attr('transform', function() {
         var pixelCoords = map.project([start_point[0].lng, start_point[0].lat]);
@@ -112,6 +98,7 @@ map.on('style.load', function() {
     }
 
     function translateAlong(path) {
+      console.log("path.features[0]", path.features[0])
       var l = turf.lineDistance(path.features[0], 'kilometers');
       return function(d, i, a) {
         return function(t) {
