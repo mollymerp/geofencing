@@ -24,9 +24,15 @@ var fs = require('fs');
 var path = require('path');
 var turf = require('turf');
 var d3 = require('d3');
+var getPath = require('./getPath');
+
 
 var zones = JSON.parse(fs.readFileSync(path.join(__dirname, 'zone.geojson'), 'utf8'));
 var test_path = JSON.parse(fs.readFileSync(path.join(__dirname, 'sample_path.json'), 'utf8'));
+
+
+
+
 
 var start_point = [{ lng: test_path.features[0].geometry.coordinates[0][0], lat: test_path.features[0].geometry.coordinates[0][1] }] || [{ lng: -0.1764678955078125, lat: 51.53074643430678 }];
 
@@ -72,22 +78,14 @@ map.on('style.load', function() {
         'line-opacity': 1,
       }
     })
-
-    // set up a test marker for a dummy car
-    var marker = d3.select('#overlay')
-      .selectAll('.endmarker')
-      .data(start_point)
-      .enter()
-      .append('div')
-      .attr('class', 'endmarker')
-      .attr('id', function(d, i) {
-        return 'marker' + i
+    var car = d3.select('#overlay')
+      .append('svg')
+      .append('circle')
+      .attr('r', 7)
+      .attr('transform', function() {
+        var pixelCoords = map.project([start_point[0].lng, start_point[0].lat]);
+        return 'translate(' + pixelCoords.x +','+ pixelCoords.y+ ')';
       })
-      .text('x')
-      .attr('style', function(d) {
-        var pixelCoords = map.project([d.lng, d.lat]);
-        return '-webkit-transform:translateX(' + pixelCoords.x + 'px) translateY(' + pixelCoords.y + 'px)'
-      });
 
     // readjust marker position every time the map is moved
     map.on('move', function() {
@@ -95,23 +93,22 @@ map.on('style.load', function() {
     });
 
     map.on('click', function() {
-      moveMarker();
+      moveCar();
     })
 
     function mapTrack(start_point) {
-      d3.selectAll('.endmarker')
+      d3.selectAll('circle')
         .data(start_point)
-        .attr('style', function(d) {
+        .attr('transform', function(d) {
           var pixelCoords = map.project([d.lng, d.lat]);
-          return '-webkit-transform:translateX(' + pixelCoords.x + 'px) translateY(' + pixelCoords.y + 'px)';
+          return 'translate(' + pixelCoords.x + ',' + pixelCoords.y + ')';
         });
     }
 
-    function moveMarker() {
-        marker.transition()
+    function moveCar() {
+      car.transition()
         .duration(10000)
-        .styleTween('-webkit-transform', translateAlong(test_path))
-
+        .attrTween('transform', translateAlong(test_path));
     }
 
     function translateAlong(path) {
@@ -119,9 +116,9 @@ map.on('style.load', function() {
       return function(d, i, a) {
         return function(t) {
           // t is time as as % of total transition duration
-          var p = turf.along(path.features[0], t*l, 'kilometers');
+          var p = turf.along(path.features[0], t * l, 'kilometers');
           var pixelCoords = map.project([p.geometry.coordinates[0], p.geometry.coordinates[1]]);
-          return 'translateX(' + pixelCoords.x + 'px) translateY(' + pixelCoords.y + 'px)';
+          return 'translate(' + pixelCoords.x + ',' + pixelCoords.y + ')';
         };
       };
     }
