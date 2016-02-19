@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta charset=utf-8 />
+  <title>Geofencing | Mapbox</title>
+
+  <!-- <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
+  <!-- <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.js'></script> -->
+
+  <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.css' rel='stylesheet' />
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Content -->
+  <div id='overlay'></div>
+  <div id='map'></div>
+  <div id='sidebar' class='fill-navy-dark'>
+    <div class='clearfix'>
+      <div class='col6'>
+        <div class='metriclabel small quiet space-top4 space-bottom4'>Vehicles <br>in zone</div>
+        <div class='metric current-vehicles denim'>0</div>
+      </div>
+      <div class='col6'>
+        <div class='metriclabel small quiet space-top4 space-bottom4'>Total daily <br>traffic</div>
+        <div class='metric total-vehicles'>0</div>
+      </div>
+    </div>
+    <div class='metriclabel small quiet space-bottom4' style='padding-top:40px'>Total Revenue</div>
+    <div class='metric space-bottom4'>$<span id="total-revenue">0</span></div>
+    <div class='dark small text-left pad2 space-top7 blurb hidden'>
+      <p>This is a map showing an application of Mapbox tools for geofencing purposes. Specifically, this visualizes the London congestion charge zone. </p>
+
+      <p class='strong'> Click anywhere on the map to add a pickup order at that location.</p>
+    </div>
+    <div class='metriclabel small quiet space-top4 space-bottom2'>Events</div>
+    <div class='ticker dark small text-left'>
+    </div>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>
