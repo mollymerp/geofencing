@@ -9,25 +9,31 @@ var cars = {},
   total = 0,
   current = 0;
 
+function getRandomColor() {
+  var colors = d3.scale.category20().range();
+  var max = colors.length - 1
+  return colors[Math.floor(Math.random() * max)];
+}
+
+
 module.exports = function(num) {
   for (var i = 0; i < num; i++) {
     getPath().then(function(path_info) {
       cars[j] = { inside: false, ever: false };
       var route = turf.linestring(path_info.routes[0].geometry.coordinates);
-      createCar(path_info.origin, 'purple')
+      createCar(path_info.origin)
         .transition()
         .duration(10000)
         .attrTween('transform', translateAlong(route, j))
         .remove();
       j++;
-
-
     });
 
   }
 }
 
 function createCar(origin, color) {
+  var color = getRandomColor();
   var new_car = d3.select('svg')
     .append('circle')
     .attr('r', 7)
@@ -47,29 +53,33 @@ function translateAlong(path, j) {
       var p = turf.along(path, t * l, 'kilometers');
       if (!cars[j].inside && turf.inside(p, zone.features[0])) {
         cars[j].inside = true;
-        d3.select('.current-vehicles')
-          .text(++current);
-
+        increment('current');
         if (!cars[j].ever) {
           cars[j].ever = true;
-          d3.select('.total-vehicles')
-            .text(++total);
-
-          d3.select('.total-revenue')
-            .text(total * 5);
+          increment('total');
         }
       } else if (cars[j].inside && !turf.inside(p, zone.features[0])) {
         cars[j].inside = false;
-        d3.select('.current-vehicles')
-          .text(--current);
+        decrement('current');
       }
-      if (t===1 && turf.inside(p, zone.features[0])){
-        d3.select('.current-vehicles')
-          .text(--current);
+      if (t === 1 && turf.inside(p, zone.features[0])) {
+        decrement('current');
       }
-
       var pixelCoords = map.project([p.geometry.coordinates[0], p.geometry.coordinates[1]]);
       return 'translate(' + pixelCoords.x + ',' + pixelCoords.y + ')';
     };
   };
+}
+
+var metrics = { 'total': total, 'current': current };
+
+function increment(metric) {
+  d3.select('.'+metric + '-vehicles').text(++metrics[metric]);
+  if (metric === 'total') {
+    d3.select('.total-revenue').text(metrics[metric] * 5);
+  }
+}
+
+function decrement(metric) {
+  d3.select('.'+metric + '-vehicles').text(--metrics[metric]);
 }
