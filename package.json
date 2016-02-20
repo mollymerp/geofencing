@@ -2,11 +2,11 @@
   "name": "geofencing-demo",
   "version": "0.0.0",
   "private": true,
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
-    "test": "eslint --no-eslintrc -c .eslintrc index.js",
-    "start": "budo index.js --serve=bundle.js --live -d",
-    "build": "browserify index.js | uglifyjs -c -m > bundle.js"
+    "test": "eslint --no-eslintrc -c .eslintrc js/index.js",
+    "start": "budo js/index.js --serve=bundle.js --live -d",
+    "build": "browserify js/index.js | uglifyjs -c -m > bundle.js"
   },
   "browserify": {
     "transform": [
