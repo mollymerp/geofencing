@@ -4,11 +4,15 @@ var getPath = require('./getPath');
 var map = require('./map');
 var zone = require('./index')
 
-var cars = {}, j = 0, total = 0, current = 0;
+var cars = {},
+  j = 0,
+  total = 0,
+  current = 0;
+
 module.exports = function(num) {
   for (var i = 0; i < num; i++) {
     getPath().then(function(path_info) {
-      cars[j] = {inside: false, ever:false};
+      cars[j] = { inside: false, ever: false };
       var route = turf.linestring(path_info.routes[0].geometry.coordinates);
       createCar(path_info.origin, 'purple')
         .transition()
@@ -16,6 +20,8 @@ module.exports = function(num) {
         .attrTween('transform', translateAlong(route, j))
         .remove();
       j++;
+
+
     });
 
   }
@@ -42,20 +48,24 @@ function translateAlong(path, j) {
       if (!cars[j].inside && turf.inside(p, zone.features[0])) {
         cars[j].inside = true;
         d3.select('.current-vehicles')
-        .text(current++);
-        
+          .text(++current);
+
         if (!cars[j].ever) {
           cars[j].ever = true;
           d3.select('.total-vehicles')
-          .text(total++);
+            .text(++total);
 
           d3.select('.total-revenue')
-          .text(total*5);
+            .text(total * 5);
         }
-      } else if (cars[j].inside && !turf.inside(p, zone.features[0])){
+      } else if (cars[j].inside && !turf.inside(p, zone.features[0])) {
         cars[j].inside = false;
         d3.select('.current-vehicles')
-        .text(current--);
+          .text(--current);
+      }
+      if (t===1 && turf.inside(p, zone.features[0])){
+        d3.select('.current-vehicles')
+          .text(--current);
       }
 
       var pixelCoords = map.project([p.geometry.coordinates[0], p.geometry.coordinates[1]]);

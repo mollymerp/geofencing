@@ -40,4 +40,7 @@ map.on('style.load', function() {
 
   var svg = d3.select('#overlay').append('svg');
   makeCar(10);
+  setInterval(function(){
+    makeCar(5);
+  }, 500);
 }) // closes on('style.load') event listener

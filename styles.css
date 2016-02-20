@@ -53,7 +53,8 @@ svg {
   bottom: 0;
   position: absolute;
   text-align: center;
-  overflow: scroll
+  overflow: scroll;
+  z-index: 999;
 }
 
 .metriclabel {
