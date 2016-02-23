@@ -11,9 +11,9 @@ var path = require('path');
 var turf = require('turf');
 var d3 = require('d3');
 
-var zones = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/zone.geojson'), 'utf8'));
+var zones = JSON.parse(fs.readFileSync(path.join(__dirname, '../zone.geojson'), 'utf8'));
 var buffered = turf.buffer(zones, 50, 'feet');
-module.exports = buffered;
+module.exports = turf.merge(buffered);
 
 // custom modules
 var map = require('./map');
@@ -36,11 +36,13 @@ map.on('style.load', function() {
       'fill-opacity': .2,
       'fill-outline-color': 'white'
     }
-  })
+  });
 
-  var svg = d3.select('#overlay').append('svg');
+  // set up svg canvas
+  d3.select('#overlay').append('svg').append('g');
+
   makeCar(10);
   setInterval(function(){
-    makeCar(5);
-  }, 500);
+    makeCar(10);
+  }, 5000);
 }) // closes on('style.load') event listener

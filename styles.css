@@ -71,3 +71,38 @@ svg {
   color: #fff;
   opacity: 0.3;
 }
+
+circle {
+  r: 5px;
+  fill: #1F6A73;
+}
+
+circle.inzone {
+  fill: #E8BE50;
+  opacity: .7
+  r: 5px;
+}
+
+circle.ring {
+  r: 10;
+  fill: none;
+  stroke-width: 0;
+}
+
+circle.ring.enter{
+  animation: ripple 1s 2;
+  stroke-width: 2px;
+  stroke:#E8BE50;
+}
+
+@-webkit-keyframes ripple {
+  0%   { r: 5px; }
+  70%  { r: 25px; }
+  100% { r: 0px; }
+}
+@-moz-keyframes ripple {
+  0%   { r: 5px; }
+  70%  { r: 20px; }
+  100% { r: 0px; }
+}
+
