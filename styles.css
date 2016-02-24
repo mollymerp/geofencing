@@ -75,34 +75,29 @@ svg {
 circle {
   r: 5px;
   fill: #1F6A73;
+  opacity: .7;
+  transition: r .4s ease;
 }
 
-circle.inzone {
+circle.inzone, circle.enter {
   fill: #E8BE50;
-  opacity: .7
-  r: 5px;
+  opacity: .7;
+  r: 9px;
+  stroke: white;
 }
 
-circle.ring {
-  r: 10;
-  fill: none;
-  stroke-width: 0;
-}
-
-circle.ring.enter{
-  animation: ripple 1s 2;
-  stroke-width: 2px;
-  stroke:#E8BE50;
+circle.enter {
+  animation: ripple .9s 1;
 }
 
 @-webkit-keyframes ripple {
-  0%   { r: 5px; }
-  70%  { r: 25px; }
+  0%   { r: 0px; }
+  70%  { r: 15px; stroke:red; stroke-width: 2px; }
   100% { r: 0px; }
 }
 @-moz-keyframes ripple {
-  0%   { r: 5px; }
-  70%  { r: 20px; }
+  0%   { r: 0px; }
+  70%  { r: 15px; stroke:red; stroke-width: 2px;}
   100% { r: 0px; }
 }
 
