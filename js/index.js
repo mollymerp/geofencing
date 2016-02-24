@@ -42,5 +42,5 @@ map.on('style.load', function() {
   makeCar(10);
   setInterval(function(){
     makeCar(5);
-  }, 500);
+  }, 2000);
 }) // closes on('style.load') event listener
