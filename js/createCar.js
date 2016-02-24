@@ -5,6 +5,7 @@ var map = require('./map');
 var zone = require('./index')
 
 var cars = {},
+  j = 0,
   total = 0,
   current = 0;
 
@@ -23,7 +24,6 @@ module.exports = function(num) {
 }
 
 function createCar(origin, color) {
-  var color = getRandomColor();
   var new_car = d3.select('svg')
     .append('circle')
     .attr('transform', function() {
@@ -38,10 +38,9 @@ function translateAlong(path, j) {
   return function(d, i, a) {
     var car = d3.select(this);
     return function(t) {
-      var ring = car.classed('ring');
       // t is time as as % of total transition duration
       var p = turf.along(path, t * l, 'kilometers');
-      if (!cars[j].inside && turf.inside(p, zone.features[0])) {
+      if (!cars[j].inside && turf.inside(p, zone)) {
         cars[j].inside = true;
         car.classed('inzone', true);
         increment('current');
@@ -50,14 +49,14 @@ function translateAlong(path, j) {
           car.classed('enter', true);
           increment('total');
         }
-      } else if (cars[j].inside && !turf.inside(p, zone.features[0])) {
+      } else if (cars[j].inside && !turf.inside(p, zone)) {
         car.classed('inzone', false);
         cars[j].inside = false;
         decrement('current');
       }
       if (t === 1) {
         delete cars[j];
-        if (turf.inside(p, zone.features[0])){
+        if (turf.inside(p, zone)){
           decrement('current');
         }
       }

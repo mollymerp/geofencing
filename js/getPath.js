@@ -13,7 +13,7 @@ module.exports = function(callback) {
 }
 
 
-// gets two random points within London
+// gets two random points along London's border
 function getStartEnd() {
   var london_border_len = turf.lineDistance(london_border, 'kilometers');
   var points = [turf.along(london_border, Math.random() * london_border_len, 'kilometers'), turf.along(london_border, Math.random() * london_border_len, 'kilometers')];

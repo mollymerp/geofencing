@@ -72,6 +72,7 @@ svg {
   opacity: 0.3;
 }
 
+
 circle {
   r: 5px;
   fill: #1F6A73;
@@ -100,4 +101,3 @@ circle.enter {
   70%  { r: 15px; stroke:red; stroke-width: 2px;}
   100% { r: 0px; }
 }
-
