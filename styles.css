@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
   position: absolute;
   height: 100%;
-  width:100%;
+  width: 100%;
 }
 
 #map,
@@ -13,7 +13,7 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 275px;
+  right: 300px;
   left: 0;
   cursor: cell;
   transition: transform 0.25s;
@@ -27,39 +27,27 @@ body {
   width: 100%;
   pointer-events: none;
 }
+
 svg {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-.endmarker {
-  position: absolute;
-  text-align: center;
-  background: #E8B60C;
-  width: 30px;
-  color: white;
-  margin-left: -15px;
-  padding: 5px;
-  border-radius: 20px;
-  font-weight: bold;
-  pointer-events: all;
-}
 
 #sidebar {
-  width: 275px;
+  width: 300px;
   border-left: 1px solid #aaa;
   right: 0;
   top: 0;
   bottom: 0;
   position: absolute;
   text-align: center;
-  overflow: scroll;
+  overflow: hidden;
   z-index: 999;
 }
 
 .metriclabel {
   text-transform: uppercase;
-  color: #fff;
   opacity: 0.75;
   font-weight: bold;
 }
@@ -68,36 +56,193 @@ svg {
   margin: 0px;
   font-size: 4em;
   font-weight: bold;
-  color: #fff;
-  opacity: 0.3;
+  opacity: 0.5;
+  color: #E8BE50;
 }
 
+.notifications-mobile p {
+  opacity: .7;
+}
+
+.device {
+  display: block;
+  position: relative;
+  height: 20vmin;
+  width: 100%;
+  background-color: #ddd;
+}
+
+.shadow {
+  background: #fff;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.shadow,
+.device {
+  border-radius: 10px;
+}
 
 circle {
   r: 5px;
-  fill: #1F6A73;
+  /*fill: #4A4A4A;*/
   opacity: .7;
+  stroke: #fff;
   transition: r .4s ease;
 }
 
-circle.inzone, circle.enter {
-  fill: #E8BE50;
-  opacity: .7;
+circle.inzone,
+circle.enter {
+  /*fill: #E8BE50;*/
   r: 9px;
-  stroke: white;
 }
 
 circle.enter {
   animation: ripple .9s 1;
 }
 
-@-webkit-keyframes ripple {
-  0%   { r: 0px; }
-  70%  { r: 15px; stroke:red; stroke-width: 2px; }
-  100% { r: 0px; }
+.screen {
+  overflow: scroll;
 }
+
+.ticker {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.ticker div {
+  padding: 0px 15px;
+  color: #828a8e;
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 0.5s ease-in;
+  opacity: 0;
+}
+
+.ticker div.expanded {
+  max-height: 200px;
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  opacity: 1
+}
+
+.ticker div strong {
+  border-radius: 2px
+}
+
+.strongpad {
+  color: white;
+  padding: 0px 4px;
+  margin-right: 2px;
+}
+
+
+/* Mobile */
+
+#topbar {
+  width: 100%;
+  height: 80px;
+  bottom: 0;
+  text-align: center;
+  z-index: 999;
+  position: absolute;
+}
+
+.notifications-button-mobile {
+  color: #E8BE50;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border-radius: 15px;
+  z-index: 999;
+}
+
+.notifications-button-mobile:click {
+  background: gray;
+}
+
+.mobile-notifications-container {
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  background: white;
+}
+
+.mobile-notifications-container.show {
+  display: block;
+  z-index: 999;
+  background: white;
+}
+
+.icon.big.close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: #E8BE50;
+  float: right;
+}
+
+@media (max-width: 640px) {
+  #sidebar {
+    display: none;
+  }
+  #map,
+  #overlay {
+    width: 100%;
+  }
+  .metric {
+    font-size: 2em;
+  }
+  .mobile-col4 {
+    float: left;
+    width: 33.3333%;
+    max-width: 400px;
+  }
+  .mobile-col3 {
+    float: left;
+    width: 25%;
+    max-width: 400px;
+  }
+}
+
+@media (max-height: 500px) {
+  #sidebar {
+    width: 400px;
+  }
+  #map,
+  #overlay {
+    right: 400px;
+  }
+}
+
+
+/* Aninmations */
+
+@-webkit-keyframes ripple {
+  0% {
+    r: 5px;
+  }
+  70% {
+    r: 15px;
+    stroke: white;
+    stroke-width: 4px;
+  }
+  100% {
+    r: 9px;
+  }
+}
+
 @-moz-keyframes ripple {
-  0%   { r: 0px; }
-  70%  { r: 15px; stroke:red; stroke-width: 2px;}
-  100% { r: 0px; }
+  0% {
+    r: 5px;
+  }
+  70% {
+    r: 15px;
+    stroke: white;
+    stroke-width: 4px;
+  }
+  100% {
+    r: 9px;
+  }
 }

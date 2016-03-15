@@ -1,45 +1,89 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <meta charset=utf-8 />
   <title>Geofencing | Mapbox</title>
-
-  <!-- <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script> -->
-  <!-- <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.js'></script> -->
-
   <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.css' rel='stylesheet' />
-
-  <link rel="stylesheet" href="styles.css">
+  <link rel='stylesheet' href='devices.min.css' type='text/css'>
+  <link rel='stylesheet' href='styles.css'>
 </head>
+
 <body>
   <!-- Content -->
-<div id="overlay"></div>
-  <div id='sidebar' class='fill-navy-dark'>
+  <div id='overlay'></div>
+  <!-- Mobile HTML -->
+  <div id='topbar' class='fill-light show-mobile'>
+    <div class="clearfix">
+      <div class='mobile-col4'>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Vehicles in zone</div>
+        <div class='metric current-vehicles'>0</div>
+      </div>
+      <div class='mobile-col4'>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Total traffic</div>
+        <div class='metric total-vehicles'>0</div>
+      </div>
+      <div class='mobile-col4'>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Total Revenue</div>
+        <div class='metric space-bottom2'>£<span class='total-revenue'>0</span></div>
+      </div>
+    </div>
+  </div>
+  <div class='notifications-button-mobile show-mobile'>
+    <p class='icon big bell'></p>
+  </div>
+
+  <div class='mobile-notifications-container'>
+  <div class='clearfix'>
+    <div class="notifications-button-mobile">
+      <p class='icon big close'></p>
+    </div>
+    <div class='metriclabel small quiet space-top4 space-bottom2'>Notifications</div>
+  </div>
+
+    <div class='ticker dark small text-left'>
+    </div>
+  </div>
+  <!-- Desktop HTML -->
+  <div id='sidebar' class='fill-light'>
     <div class='clearfix'>
       <div class='col6'>
-        <div class='metriclabel small quiet space-top4 space-bottom4'>Vehicles <br>in zone</div>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Vehicles
+          <br>in zone</div>
         <div class='metric current-vehicles denim'>0</div>
       </div>
       <div class='col6'>
-        <div class='metriclabel small quiet space-top4 space-bottom4'>Total daily <br>traffic</div>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Total daily
+          <br>traffic</div>
         <div class='metric total-vehicles'>0</div>
       </div>
     </div>
-    <div class='metriclabel small quiet space-bottom4' style='padding-top:40px'>Total Revenue</div>
-    <div class='metric space-bottom4'>£<span class="total-revenue">0</span></div>
+    <div class='metriclabel small quiet space-bottom2' style='padding-top:30px'>Total Revenue</div>
+    <div class='metric space-bottom2'>£<span class='total-revenue'>0</span></div>
+
     <div class='dark small text-left pad2 space-top7 blurb hidden'>
       <p>This is a map showing an application of Mapbox tools for geofencing purposes. Specifically, this visualizes the London congestion charge zone. </p>
-
     </div>
-<!--     <div class='metriclabel small quiet space-top4 space-bottom2'>Events</div>
-    <div class='ticker dark small text-left'>
-    </div> -->
+
+    <div class='pad2y block center'></div>
+    <div class='marvel-device iphone5s gold'>
+      <div class='camera'></div>
+      <div class='sensor'></div>
+      <div class='speaker'></div>
+      <div class='screen'>
+        <div class='metriclabel small quiet space-top2 space-bottom2'>Notifications</div>
+        <div class='ticker dark small text-left'>
+        </div>
+      </div>
+      <div class='home'></div>
+      <div class='bottom-bar'></div>
+    </div>
   </div>
   <div id='map'>
-    <!-- <div id='overlay'></div> -->
   </div>
-  <script src="bundle.js"></script>
+  <script src='bundle.js'></script>
 </body>
+
 </html>
