@@ -11,7 +11,7 @@ Tools used:
 - Mapbox Directions API
 
 
-__Geofencing Demo:__ [https://www.mapbox.com/bites/00223/]()
+__Geofencing Demo:__ https://www.mapbox.com/bites/00223/
 
 ### Running locally
 
@@ -22,4 +22,4 @@ __Geofencing Demo:__ [https://www.mapbox.com/bites/00223/]()
 
     npm run build
     
-__Last updated:__ 19 Feb 2016
+__Last updated:__ 5 Feb 2017
